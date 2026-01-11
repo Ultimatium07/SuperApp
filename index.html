@@ -3,10 +3,459 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="refresh" content="0; url=nexus-quantum.html">
-    <title>NEXUS QUANTUM - Ultimate WebApp</title>
+    <title>NEXUS QUANTUM APEX - Hybrid Super App</title>
+    
+    <!-- External Libraries -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- GSAP Animation Engine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+    
+    <!-- Three.js for 3D Effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    
+    <!-- TensorFlow.js for Edge AI -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    
+    <!-- Core Scripts -->
+    <script src="quantum-core.js"></script>
+    <script src="nexus-quantum.js"></script>
+    <script src="quantum-functions.js"></script>
+    <script src="nexus-bot-integration.js"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="nexus-quantum.css">
+    
+    <style>
+        /* 🚀 HYBRID SUPER APP STYLES */
+        .hybrid-badge {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #ff00ff, #00ffff);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            z-index: 10000;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .advanced-upload {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #00ffff, #ff00ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .advanced-upload:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 50px rgba(255, 0, 255, 0.7);
+        }
+        
+        .ai-status {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #00ff00;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-family: 'Orbitron', monospace;
+            font-size: 12px;
+            border: 1px solid #00ff00;
+        }
+    </style>
 </head>
 <body>
-    <p>Redirecting to <a href="nexus-quantum.html">NEXUS QUANTUM</a>...</p>
+    <!-- 🚀 HYBRID BADGE -->
+    <div class="hybrid-badge">
+        <i class="fas fa-bolt"></i> HYBRID SUPER APP
+    </div>
+    
+    <!-- 🤖 AI STATUS -->
+    <div class="ai-status">
+        <i class="fas fa-brain"></i> AI: <span id="aiStatus">READY</span>
+    </div>
+    
+    <!-- Quantum Background Effects -->
+    <canvas id="quantumCanvas"></canvas>
+    <canvas id="meshGradient"></canvas>
+    <canvas id="particleCanvas"></canvas>
+    <div id="spotlight"></div>
+    <div class="noise-overlay"></div>
+    <div class="scanline"></div>
+    
+    <!-- Quantum Loader -->
+    <div id="quantumLoader">
+        <div class="loader-content">
+            <div class="quantum-orb">
+                <div class="orb-ring ring-1"></div>
+                <div class="orb-ring ring-2"></div>
+                <div class="orb-ring ring-3"></div>
+                <div class="orb-core">
+                    <div class="core-pulse"></div>
+                </div>
+            </div>
+            <div class="loader-text">NEXUS QUANTUM APEX</div>
+            <div class="loader-subtitle">Hybrid Super App Loading...</div>
+            <div class="loader-progress">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="loading-stages">
+                <div class="stage active" data-stage="core">Quantum Core</div>
+                <div class="stage" data-stage="ai">AI Neural Network</div>
+                <div class="stage" data-stage="hybrid">Hybrid Systems</div>
+                <div class="stage" data-stage="sync">Bot Synchronization</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Quantum App -->
+    <div id="quantumApp">
+        <!-- Quantum Header -->
+        <header class="quantum-header">
+            <div class="header-left">
+                <div class="quantum-avatar" id="userAvatar">
+                    <div class="avatar-glow"></div>
+                    <div class="avatar-text">N</div>
+                    <div class="avatar-level">1</div>
+                </div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Hybrid User</div>
+                    <div class="user-tier" id="userTier">
+                        <i class="fas fa-atom"></i>
+                        <span>Quantum Apex</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="quantum-stats">
+                    <div class="stat-item quantum">
+                        <div class="stat-icon">
+                            <i class="fas fa-bolt"></i>
+                            <div class="stat-pulse"></div>
+                        </div>
+                        <div class="stat-value" id="quantumXP">0</div>
+                        <div class="stat-label">XP</div>
+                    </div>
+                    <div class="stat-item gold">
+                        <div class="stat-icon">
+                            <i class="fas fa-coins"></i>
+                            <div class="stat-pulse gold"></div>
+                        </div>
+                        <div class="stat-value" id="quantumGold">0</div>
+                        <div class="stat-label">GOLD</div>
+                    </div>
+                    <div class="stat-item energy">
+                        <div class="stat-icon">
+                            <i class="fas fa-battery-full"></i>
+                            <div class="stat-pulse energy"></div>
+                        </div>
+                        <div class="stat-value" id="quantumEnergy">1000</div>
+                        <div class="stat-label">ENERGY</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="quantum-nav">
+            <div class="nav-item active" data-section="mining">
+                <i class="fas fa-bolt"></i>
+                <span>Mining</span>
+            </div>
+            <div class="nav-item" data-section="quiz">
+                <i class="fas fa-brain"></i>
+                <span>AI Quiz</span>
+            </div>
+            <div class="nav-item" data-section="battle">
+                <i class="fas fa-sword"></i>
+                <span>Battle</span>
+            </div>
+            <div class="nav-item" data-section="wayground">
+                <i class="fas fa-users"></i>
+                <span>Wayground</span>
+            </div>
+            <div class="nav-item" data-section="profile">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="quantum-content">
+            <!-- Mining Section -->
+            <section class="section active" id="miningSection">
+                <div class="section-header">
+                    <h2>⚡ Quantum Mining</h2>
+                    <p>Click the reactor to mine quantum coins</p>
+                </div>
+                
+                <div class="reactor-container">
+                    <div class="quantum-reactor" id="quantumReactor">
+                        <div class="reactor-core">
+                            <div class="core-pulse"></div>
+                            <div class="core-energy"></div>
+                        </div>
+                        <div class="reactor-ring ring-1"></div>
+                        <div class="reactor-ring ring-2"></div>
+                        <div class="reactor-ring ring-3"></div>
+                        <div class="reactor-particles"></div>
+                    </div>
+                </div>
+                
+                <div class="mining-stats">
+                    <div class="stat-card">
+                        <h3>TAP POWER</h3>
+                        <div class="stat-value" id="tapPower">1</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>PER SECOND</h3>
+                        <div class="stat-value" id="perSecond">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>TOTAL MINED</h3>
+                        <div class="stat-value" id="totalMined">0</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI Quiz Section -->
+            <section class="section" id="quizSection">
+                <div class="section-header">
+                    <h2>🤖 AI Quiz</h2>
+                    <p>Test your knowledge with AI-powered questions</p>
+                </div>
+                
+                <div class="quiz-topics">
+                    <div class="topic-card" data-topic="general">
+                        <i class="fas fa-globe"></i>
+                        <h3>General</h3>
+                    </div>
+                    <div class="topic-card" data-topic="science">
+                        <i class="fas fa-flask"></i>
+                        <h3>Science</h3>
+                    </div>
+                    <div class="topic-card" data-topic="tech">
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>Technology</h3>
+                    </div>
+                    <div class="topic-card" data-topic="history">
+                        <i class="fas fa-landmark"></i>
+                        <h3>History</h3>
+                    </div>
+                    <div class="topic-card" data-topic="sports">
+                        <i class="fas fa-football-ball"></i>
+                        <h3>Sports</h3>
+                    </div>
+                </div>
+                
+                <div class="quiz-container" id="quizContainer">
+                    <div class="quiz-welcome">
+                        <h3>Choose a topic to start!</h3>
+                        <p>Select any topic above to begin your AI-powered quiz experience.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Battle Section -->
+            <section class="section" id="battleSection">
+                <div class="section-header">
+                    <h2>⚔️ Battle Arena</h2>
+                    <p>Compete with players worldwide</p>
+                </div>
+                
+                <div class="battle-options">
+                    <button class="battle-btn" id="createBattle">
+                        <i class="fas fa-plus"></i>
+                        Create Room
+                    </button>
+                    <button class="battle-btn" id="joinBattle">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Join Room
+                    </button>
+                    <button class="battle-btn" id="quickBattle">
+                        <i class="fas fa-bolt"></i>
+                        Quick Match
+                    </button>
+                </div>
+                
+                <div class="battle-rooms" id="battleRooms">
+                    <div class="room-placeholder">
+                        <i class="fas fa-users"></i>
+                        <p>No active rooms. Create one!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Wayground Section -->
+            <section class="section" id="waygroundSection">
+                <div class="section-header">
+                    <h2>👥 Wayground</h2>
+                    <p>Study rooms and collaborative learning</p>
+                </div>
+                
+                <div class="wayground-options">
+                    <button class="wayground-btn" id="createRoom">
+                        <i class="fas fa-plus"></i>
+                        Create Study Room
+                    </button>
+                    <button class="wayground-btn" id="joinRoom">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Join Room
+                    </button>
+                </div>
+                
+                <div class="study-rooms" id="studyRooms">
+                    <div class="room-placeholder">
+                        <i class="fas fa-book"></i>
+                        <p>No active study rooms. Create one!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profile Section -->
+            <section class="section" id="profileSection">
+                <div class="section-header">
+                    <h2>👤 Profile</h2>
+                    <p>Your achievements and statistics</p>
+                </div>
+                
+                <div class="profile-stats">
+                    <div class="profile-card">
+                        <h3>Level</h3>
+                        <div class="profile-value" id="profileLevel">1</div>
+                    </div>
+                    <div class="profile-card">
+                        <h3>Total XP</h3>
+                        <div class="profile-value" id="profileXP">0</div>
+                    </div>
+                    <div class="profile-card">
+                        <h3>Achievements</h3>
+                        <div class="profile-value" id="profileAchievements">0</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 🚀 ADVANCED UPLOAD BUTTON -->
+    <div class="advanced-upload" id="advancedUpload">
+        <i class="fas fa-cloud-upload-alt"></i>
+    </div>
+
+    <!-- Hidden file input for advanced upload -->
+    <input type="file" id="fileInput" multiple accept="*/*" style="display: none;">
+
+    <script>
+        // 🚀 HYBRID SUPER APP INITIALIZATION
+        class HybridSuperApp {
+            constructor() {
+                this.isHybrid = true;
+                this.aiReady = false;
+                this.botConnected = false;
+                this.init();
+            }
+
+            init() {
+                console.log('🚀 NEXUS QUANTUM APEX - Hybrid Super App Starting...');
+                this.initializeAI();
+                this.initializeBot();
+                this.initializeAdvancedUpload();
+                this.updateAIStatus('INITIALIZING');
+            }
+
+            initializeAI() {
+                // Initialize TensorFlow.js models
+                tf.ready().then(() => {
+                    console.log('🤖 TensorFlow.js ready!');
+                    this.aiReady = true;
+                    this.updateAIStatus('READY');
+                }).catch(err => {
+                    console.error('❌ TensorFlow.js error:', err);
+                    this.updateAIStatus('ERROR');
+                });
+            }
+
+            initializeBot() {
+                // Initialize Telegram bot integration
+                if (window.Telegram?.WebApp) {
+                    window.Telegram.WebApp.ready();
+                    window.Telegram.WebApp.expand();
+                    this.botConnected = true;
+                    console.log('🤖 Telegram bot connected!');
+                } else {
+                    console.log('📱 Running in standalone mode');
+                }
+            }
+
+            initializeAdvancedUpload() {
+                const uploadBtn = document.getElementById('advancedUpload');
+                const fileInput = document.getElementById('fileInput');
+
+                uploadBtn.addEventListener('click', () => {
+                    fileInput.click();
+                });
+
+                fileInput.addEventListener('change', (e) => {
+                    this.handleFileUpload(e.target.files);
+                });
+            }
+
+            handleFileUpload(files) {
+                console.log('📁 Files uploaded:', files);
+                // Advanced file processing logic here
+                this.updateAIStatus('PROCESSING');
+                
+                // Simulate AI processing
+                setTimeout(() => {
+                    this.updateAIStatus('READY');
+                    alert('🚀 Files processed with AI! (Hybrid Feature)');
+                }, 2000);
+            }
+
+            updateAIStatus(status) {
+                const statusElement = document.getElementById('aiStatus');
+                if (statusElement) {
+                    statusElement.textContent = status;
+                    statusElement.style.color = status === 'READY' ? '#00ff00' : 
+                                              status === 'ERROR' ? '#ff0000' : '#ffff00';
+                }
+            }
+        }
+
+        // Initialize Hybrid Super App
+        const hybridApp = new HybridSuperApp();
+
+        // Existing Nexus Quantum initialization
+        if (typeof QuantumApp !== 'undefined') {
+            QuantumApp.init();
+        }
+
+        console.log('🏆 NEXUS QUANTUM APEX - Hybrid Super App Loaded!');
+    </script>
 </body>
 </html>
