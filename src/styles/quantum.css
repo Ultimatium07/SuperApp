@@ -1,0 +1,460 @@
+/* Quantum CSS - Advanced Visual Effects */
+
+/* Quantum Keyframes */
+@keyframes quantumPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes neonGlow {
+  0% {
+    filter: drop-shadow(0 0 20px #00ffff) drop-shadow(0 0 40px #00ffff);
+  }
+  100% {
+    filter: drop-shadow(0 0 30px #ff00ff) drop-shadow(0 0 60px #ff00ff);
+  }
+}
+
+@keyframes hologramFloat {
+  0%, 100% {
+    transform: translateY(0) rotateX(0);
+  }
+  50% {
+    transform: translateY(-20px) rotateX(5deg);
+  }
+}
+
+@keyframes particleSwarm {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate(100px, -100px) rotate(360deg);
+  }
+}
+
+@keyframes quantumSpin {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.2);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes neuralPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+}
+
+@keyframes metaverseRotate {
+  0% {
+    transform: rotateX(0) rotateY(0) rotateZ(0);
+  }
+  100% {
+    transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+  }
+}
+
+@keyframes quantumRipple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+@keyframes dataStream {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+@keyframes glitch {
+  0%, 100% {
+    transform: translate(0);
+    filter: hue-rotate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+    filter: hue-rotate(90deg);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+    filter: hue-rotate(180deg);
+  }
+  60% {
+    transform: translate(2px, 2px);
+    filter: hue-rotate(270deg);
+  }
+  80% {
+    transform: translate(2px, -2px);
+    filter: hue-rotate(360deg);
+  }
+}
+
+/* Quantum Components */
+.quantum-field {
+  position: relative;
+  overflow: hidden;
+}
+
+.quantum-field::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+  animation: quantumPulse 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.quantum-grid {
+  background-image: 
+    linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: particleSwarm 20s linear infinite;
+}
+
+.holographic-display {
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 255, 0.1),
+    rgba(255, 0, 255, 0.1),
+    rgba(139, 92, 246, 0.1)
+  );
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.holographic-display::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: hologramScan 3s linear infinite;
+}
+
+@keyframes hologramScan {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.neural-network {
+  position: relative;
+}
+
+.neural-node {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--quantum-cyan);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--quantum-cyan);
+  animation: neuralPulse 3s ease-in-out infinite;
+}
+
+.neural-connection {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--quantum-cyan),
+    transparent
+  );
+  animation: dataStream 2s linear infinite;
+}
+
+.quantum-reactor {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reactor-core {
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(
+    circle,
+    var(--quantum-cyan) 0%,
+    var(--quantum-magenta) 50%,
+    var(--quantum-purple) 100%
+  );
+  border-radius: 50%;
+  animation: quantumSpin 4s linear infinite;
+  box-shadow: var(--holographic-shadow);
+}
+
+.reactor-ring {
+  position: absolute;
+  border: 2px solid;
+  border-radius: 50%;
+  animation: quantumPulse 2s ease-in-out infinite;
+}
+
+.reactor-ring:nth-child(1) {
+  width: 140px;
+  height: 140px;
+  border-color: var(--quantum-cyan);
+  animation-delay: 0s;
+}
+
+.reactor-ring:nth-child(2) {
+  width: 170px;
+  height: 170px;
+  border-color: var(--quantum-magenta);
+  animation-delay: 0.5s;
+}
+
+.reactor-ring:nth-child(3) {
+  width: 200px;
+  height: 200px;
+  border-color: var(--quantum-purple);
+  animation-delay: 1s;
+}
+
+/* Particle Effects */
+.particle-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--quantum-cyan);
+  border-radius: 50%;
+  opacity: 0;
+  animation: particleFloat 10s linear infinite;
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Glitch Effect */
+.glitch {
+  position: relative;
+  color: var(--quantum-cyan);
+  animation: glitch 2s infinite;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch::before {
+  color: var(--quantum-magenta);
+  animation: glitch 1s infinite;
+  animation-delay: 0.1s;
+}
+
+.glitch::after {
+  color: var(--quantum-purple);
+  animation: glitch 1s infinite;
+  animation-delay: 0.2s;
+}
+
+/* Matrix Rain Effect */
+.matrix-rain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.matrix-column {
+  position: absolute;
+  top: -100%;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: var(--quantum-green);
+  animation: matrixFall 10s linear infinite;
+}
+
+@keyframes matrixFall {
+  0% {
+    top: -100%;
+  }
+  100% {
+    top: 100vh;
+  }
+}
+
+/* Cyber Grid */
+.cyber-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  background-image: 
+    linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 100px 100px;
+  animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(100px, 100px);
+  }
+}
+
+/* Quantum Loading Bar */
+.quantum-loader {
+  position: relative;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.quantum-loader::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--quantum-cyan),
+    var(--quantum-magenta),
+    var(--quantum-purple)
+  );
+  animation: loadingProgress 2s ease-in-out infinite;
+}
+
+@keyframes loadingProgress {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Responsive Quantum Effects */
+@media (max-width: 768px) {
+  .quantum-reactor {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .reactor-core {
+    width: 75px;
+    height: 75px;
+  }
+  
+  .particle {
+    width: 1px;
+    height: 1px;
+  }
+  
+  .matrix-column {
+    font-size: 12px;
+  }
+}
+
+/* Performance Optimizations */
+.quantum-effects {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.will-change-gpu {
+  will-change: transform, opacity;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .quantum-effects,
+  .particle,
+  .matrix-column,
+  .neural-node,
+  .reactor-core,
+  .reactor-ring {
+    animation: none !important;
+  }
+}
