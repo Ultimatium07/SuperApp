@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#00ffff">
+    <meta name="description" content="NEXUS QUANTUM APEX - #1 Individual Developer Application">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <title>NEXUS QUANTUM APEX</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    
+    <!-- Telegram WebApp -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- GSAP Animation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    
+    <!-- Three.js for 3D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Quantum Background Canvas -->
+    <canvas id="quantumBg"></canvas>
+    <canvas id="particleCanvas"></canvas>
+    
+    <!-- Scan Line Effect -->
+    <div class="scanline"></div>
+    <div class="noise-overlay"></div>
+    
+    <!-- Quantum Loader -->
+    <div id="loader" class="loader">
+        <div class="loader-content">
+            <div class="quantum-orb">
+                <div class="orb-core"></div>
+                <div class="orb-ring ring-1"></div>
+                <div class="orb-ring ring-2"></div>
+                <div class="orb-ring ring-3"></div>
+                <div class="orb-particles"></div>
+            </div>
+            <div class="loader-text">NEXUS QUANTUM APEX</div>
+            <div class="loader-subtitle">Initializing Quantum Systems...</div>
+            <div class="loader-progress">
+                <div class="progress-bar"></div>
+            </div>
+            <div class="loader-stages">
+                <span class="stage active" data-stage="1">Core</span>
+                <span class="stage" data-stage="2">Neural</span>
+                <span class="stage" data-stage="3">Quantum</span>
+                <span class="stage" data-stage="4">Ready</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="app" class="app hidden">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <div class="avatar" id="userAvatar">
+                    <div class="avatar-glow"></div>
+                    <span class="avatar-letter">N</span>
+                    <div class="avatar-level">1</div>
+                </div>
+                <div class="user-info">
+                    <span class="user-name" id="userName">Quantum User</span>
+                    <span class="user-tier">
+                        <i class="fas fa-atom"></i> Nexus Apex
+                    </span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="stat-pill xp">
+                    <i class="fas fa-bolt"></i>
+                    <span id="userXP">0</span>
+                </div>
+                <div class="stat-pill gold">
+                    <i class="fas fa-coins"></i>
+                    <span id="userGold">0</span>
+                </div>
+                <div class="stat-pill energy">
+                    <i class="fas fa-battery-full"></i>
+                    <span id="userEnergy">1000</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Container -->
+        <main class="main-content">
+            <!-- Mining Section -->
+            <section id="miningSection" class="section active">
+                <div class="section-header">
+                    <h2><i class="fas fa-bolt"></i> Quantum Mining</h2>
+                    <p>Tap the reactor to mine quantum coins</p>
+                </div>
+                
+                <div class="mining-container">
+                    <!-- Quantum Reactor -->
+                    <div class="reactor-wrapper">
+                        <div class="reactor" id="quantumReactor">
+                            <div class="reactor-core">
+                                <div class="core-inner"></div>
+                                <div class="core-pulse"></div>
+                            </div>
+                            <div class="reactor-ring r1"></div>
+                            <div class="reactor-ring r2"></div>
+                            <div class="reactor-ring r3"></div>
+                            <div class="reactor-energy"></div>
+                            <div class="tap-effect" id="tapEffect"></div>
+                        </div>
+                        <div class="reactor-stats">
+                            <div class="reactor-stat">
+                                <span class="stat-label">Tap Power</span>
+                                <span class="stat-value" id="tapPower">1</span>
+                            </div>
+                            <div class="reactor-stat">
+                                <span class="stat-label">Per Second</span>
+                                <span class="stat-value" id="perSecond">0</span>
+                            </div>
+                            <div class="reactor-stat">
+                                <span class="stat-label">Critical</span>
+                                <span class="stat-value" id="critChance">10%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Energy Bar -->
+                    <div class="energy-bar-container">
+                        <div class="energy-bar">
+                            <div class="energy-fill" id="energyFill"></div>
+                            <div class="energy-text">
+                                <span id="currentEnergy">1000</span> / <span id="maxEnergy">1000</span>
+                            </div>
+                        </div>
+                        <button class="recharge-btn" id="rechargeBtn">
+                            <i class="fas fa-bolt"></i> Recharge
+                        </button>
+                    </div>
+                    
+                    <!-- Upgrades -->
+                    <div class="upgrades-grid" id="upgradesGrid">
+                        <!-- Upgrades will be rendered here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI Quiz Section -->
+            <section id="quizSection" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-brain"></i> AI Quiz</h2>
+                    <p>Test your knowledge with AI-powered questions</p>
+                </div>
+                
+                <div class="quiz-container">
+                    <!-- Topic Selection -->
+                    <div class="quiz-topics" id="quizTopics">
+                        <div class="topic-card" data-topic="general">
+                            <div class="topic-icon"><i class="fas fa-globe"></i></div>
+                            <span>General</span>
+                        </div>
+                        <div class="topic-card" data-topic="science">
+                            <div class="topic-icon"><i class="fas fa-flask"></i></div>
+                            <span>Science</span>
+                        </div>
+                        <div class="topic-card" data-topic="technology">
+                            <div class="topic-icon"><i class="fas fa-microchip"></i></div>
+                            <span>Technology</span>
+                        </div>
+                        <div class="topic-card" data-topic="history">
+                            <div class="topic-icon"><i class="fas fa-landmark"></i></div>
+                            <span>History</span>
+                        </div>
+                        <div class="topic-card" data-topic="sports">
+                            <div class="topic-icon"><i class="fas fa-futbol"></i></div>
+                            <span>Sports</span>
+                        </div>
+                        <div class="topic-card" data-topic="programming">
+                            <div class="topic-icon"><i class="fas fa-code"></i></div>
+                            <span>Coding</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Quiz Game Area -->
+                    <div class="quiz-game hidden" id="quizGame">
+                        <div class="quiz-header">
+                            <div class="quiz-progress">
+                                <span id="questionNum">1</span>/<span id="totalQuestions">10</span>
+                            </div>
+                            <div class="quiz-timer">
+                                <i class="fas fa-clock"></i>
+                                <span id="quizTimer">30</span>s
+                            </div>
+                            <div class="quiz-score">
+                                <i class="fas fa-star"></i>
+                                <span id="quizScore">0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-question" id="quizQuestion">
+                            <!-- Question will be rendered here -->
+                        </div>
+                        
+                        <div class="quiz-options" id="quizOptions">
+                            <!-- Options will be rendered here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Quiz Results -->
+                    <div class="quiz-results hidden" id="quizResults">
+                        <div class="results-icon">🏆</div>
+                        <h3>Quiz Complete!</h3>
+                        <div class="results-stats">
+                            <div class="result-stat">
+                                <span class="result-label">Score</span>
+                                <span class="result-value" id="finalScore">0</span>
+                            </div>
+                            <div class="result-stat">
+                                <span class="result-label">Correct</span>
+                                <span class="result-value" id="correctAnswers">0/10</span>
+                            </div>
+                            <div class="result-stat">
+                                <span class="result-label">XP Earned</span>
+                                <span class="result-value" id="xpEarned">+0</span>
+                            </div>
+                        </div>
+                        <button class="btn-primary" id="playAgainBtn">Play Again</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Battle Arena Section -->
+            <section id="battleSection" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-swords"></i> Battle Arena</h2>
+                    <p>Compete with players worldwide</p>
+                </div>
+                
+                <div class="battle-container">
+                    <div class="battle-options">
+                        <button class="battle-btn" id="createBattleBtn">
+                            <i class="fas fa-plus"></i>
+                            <span>Create Room</span>
+                        </button>
+                        <button class="battle-btn" id="joinBattleBtn">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Join Room</span>
+                        </button>
+                        <button class="battle-btn highlight" id="quickMatchBtn">
+                            <i class="fas fa-bolt"></i>
+                            <span>Quick Match</span>
+                        </button>
+                    </div>
+                    
+                    <div class="battle-rooms" id="battleRooms">
+                        <div class="room-placeholder">
+                            <i class="fas fa-users"></i>
+                            <p>No active rooms. Create one!</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Battle Arena -->
+                    <div class="battle-arena hidden" id="battleArena">
+                        <div class="battle-players">
+                            <div class="battle-player you">
+                                <div class="player-avatar">Y</div>
+                                <div class="player-name">You</div>
+                                <div class="player-score" id="yourScore">0</div>
+                            </div>
+                            <div class="vs-badge">VS</div>
+                            <div class="battle-player opponent">
+                                <div class="player-avatar">O</div>
+                                <div class="player-name" id="opponentName">Opponent</div>
+                                <div class="player-score" id="opponentScore">0</div>
+                            </div>
+                        </div>
+                        <div class="battle-question" id="battleQuestion">
+                            <!-- Battle question here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Wayground Section -->
+            <section id="waygroundSection" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-users"></i> Wayground</h2>
+                    <p>Study rooms and collaborative learning</p>
+                </div>
+                
+                <div class="wayground-container">
+                    <div class="wayground-options">
+                        <button class="wayground-btn" id="createStudyBtn">
+                            <i class="fas fa-plus"></i>
+                            <span>Create Study Room</span>
+                        </button>
+                        <button class="wayground-btn" id="joinStudyBtn">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Join Room</span>
+                        </button>
+                    </div>
+                    
+                    <div class="study-rooms" id="studyRooms">
+                        <div class="room-placeholder">
+                            <i class="fas fa-book-open"></i>
+                            <p>No study rooms available</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- File Analysis Section -->
+            <section id="filesSection" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-file-alt"></i> AI File Analysis</h2>
+                    <p>Upload files from your phone for AI analysis</p>
+                </div>
+                
+                <div class="files-container">
+                    <!-- Upload Zone -->
+                    <div class="upload-zone" id="uploadZone">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <p>Tap to upload or drag files here</p>
+                        <span class="upload-hint">Supports images, documents, audio</span>
+                        <input type="file" id="fileInput" multiple accept="image/*,application/pdf,.doc,.docx,.txt,audio/*">
+                    </div>
+                    
+                    <!-- Quick Actions -->
+                    <div class="upload-actions">
+                        <button class="upload-action" id="cameraBtn">
+                            <i class="fas fa-camera"></i>
+                            <span>Camera</span>
+                        </button>
+                        <button class="upload-action" id="galleryBtn">
+                            <i class="fas fa-images"></i>
+                            <span>Gallery</span>
+                        </button>
+                        <button class="upload-action" id="documentBtn">
+                            <i class="fas fa-file-pdf"></i>
+                            <span>Document</span>
+                        </button>
+                        <button class="upload-action" id="audioBtn">
+                            <i class="fas fa-microphone"></i>
+                            <span>Audio</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Analysis Results -->
+                    <div class="analysis-results" id="analysisResults">
+                        <!-- Results will be rendered here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profile Section -->
+            <section id="profileSection" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-user"></i> Profile</h2>
+                    <p>Your achievements and statistics</p>
+                </div>
+                
+                <div class="profile-container">
+                    <!-- Profile Card -->
+                    <div class="profile-card">
+                        <div class="profile-avatar">
+                            <div class="avatar-large" id="profileAvatar">N</div>
+                            <div class="profile-level">Lvl <span id="profileLevel">1</span></div>
+                        </div>
+                        <div class="profile-info">
+                            <h3 id="profileName">Quantum User</h3>
+                            <p class="profile-rank">
+                                <i class="fas fa-trophy"></i> Rank #<span id="profileRank">---</span>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Stats Grid -->
+                    <div class="profile-stats">
+                        <div class="profile-stat">
+                            <div class="stat-icon"><i class="fas fa-bolt"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="totalXP">0</span>
+                                <span class="stat-label">Total XP</span>
+                            </div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="stat-icon"><i class="fas fa-coins"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="totalGold">0</span>
+                                <span class="stat-label">Gold</span>
+                            </div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="stat-icon"><i class="fas fa-gamepad"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="gamesPlayed">0</span>
+                                <span class="stat-label">Games</span>
+                            </div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="stat-icon"><i class="fas fa-award"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="achievements">0</span>
+                                <span class="stat-label">Achievements</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Achievements -->
+                    <div class="achievements-section">
+                        <h4>Achievements</h4>
+                        <div class="achievements-grid" id="achievementsGrid">
+                            <!-- Achievements will be rendered here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Daily Challenges -->
+                    <div class="daily-section">
+                        <h4>Daily Challenges</h4>
+                        <div class="daily-challenges" id="dailyChallenges">
+                            <!-- Daily challenges will be rendered here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <div class="nav-item active" data-section="mining">
+                <i class="fas fa-bolt"></i>
+                <span>Mining</span>
+            </div>
+            <div class="nav-item" data-section="quiz">
+                <i class="fas fa-brain"></i>
+                <span>Quiz</span>
+            </div>
+            <div class="nav-item" data-section="battle">
+                <i class="fas fa-swords"></i>
+                <span>Battle</span>
+            </div>
+            <div class="nav-item" data-section="wayground">
+                <i class="fas fa-users"></i>
+                <span>Wayground</span>
+            </div>
+            <div class="nav-item" data-section="files">
+                <i class="fas fa-file-alt"></i>
+                <span>Files</span>
+            </div>
+            <div class="nav-item" data-section="profile">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Modals Container -->
+    <div id="modalContainer" class="modal-container"></div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+    <script src="mining.js"></script>
+    <script src="quiz.js"></script>
+    <script src="battle.js"></script>
+    <script src="file-upload.js"></script>
+    <script src="bot-integration.js"></script>
+</body>
+</html>
